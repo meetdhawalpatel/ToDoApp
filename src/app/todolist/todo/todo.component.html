@@ -1,0 +1,18 @@
+  <div class="card text-white bg-dark">
+    <div class="card-body">
+        <div (click)="remove()" class="float-right"><span class="fa fa-remove" aria-hidden="true"></span></div>
+    
+        <h5 class="card-title">{{todo.title}}</h5>
+            
+      <p class="card-text">{{todo.disc}}</p>
+    </div>
+    <div class="card-footer">
+        <div class="float-left">
+            <app-favorite [isFav]="todo.isfav" (toggleFav)="changeFavStatus($event)"></app-favorite>
+        </div>
+        <div class="float-right">
+           <span>{{todo.lmtime | timeAgo:counter}}</span>
+        </div>
+    </div>
+  </div>
+  
