@@ -9,7 +9,9 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TodoComponent implements OnInit {
 
   @Input("currentTodo") public todo : Todo;
+ 
   public counter : number= setInterval(() => {if(this.counter)this.counter++; }, 5000);
+  
   constructor(private _todoService : TodoService) { }
 
   ngOnInit(): void {

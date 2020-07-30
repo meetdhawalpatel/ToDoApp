@@ -13,10 +13,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   onSubmit(form: NgForm){
     console.log(form)
-    if(!form.valid)
+    if(form.invalid)
     {
       form.form.setErrors({error : "Please provide proper UserName and Password"});
     }
