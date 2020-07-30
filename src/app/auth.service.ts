@@ -35,6 +35,20 @@ export class AuthService {
     this._updateStorage();
   }
 
+  login(username :string, password : string) : User | {error: string}
+  {
+    let user : User;
+    this.allUsers.forEach(element => {
+      if(element.name === username && element.password === password) 
+        user = element;
+    });
+    if(user)
+    {
+      return user;
+    }
+    return {error : 'Invalid username or password'};
+  }
+
   _updateStorage()
   {
     let jsonString = JSON.stringify(this.allUsers);
@@ -43,7 +57,7 @@ export class AuthService {
 
 }
 
-interface User
+export interface User
 {
   name : string,
   mobile: string,

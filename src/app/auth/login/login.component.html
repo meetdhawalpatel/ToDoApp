@@ -1,1 +1,44 @@
-<p>login works!</p>
+<div class="login-form">
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+		<h2>Login</h2>
+		<div *ngIf="loginForm.errors && loginForm.errors.error" class="alert alert-danger">
+            {{loginForm.errors.error}}
+        </div>
+        <div *ngIf="loginForm.errors && loginForm.errors.success" class="alert alert-success">
+            {{loginForm.errors.success}}
+        </div>
+        <div class="form-group">
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">
+						<span class="fa fa-user"></span>
+					</span>                    
+				</div>
+                <input type="text" class="form-control" 
+                    name="name" placeholder="name" 
+                    required="required" 
+                    ngModel
+                    #EnteredName="ngModel">
+            </div>
+            <div *ngIf="EnteredName.touched && !EnteredName.valid" class="invalid-input">Name is required</div>
+        </div>
+        <div class="form-group" >
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fa fa-lock"></i>
+                    </span>                    
+                </div>
+                <input type="password" class="form-control" 
+                name="password" placeholder="Password" 
+                required="required"
+                ngModel
+                #EnteredPassword="ngModel">
+            </div>
+            <div *ngIf="EnteredPassword.touched && !EnteredPassword.valid" class="invalid-input">password is required</div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg" [disabled]="!loginForm.form.valid">Login</button>
+        </div>
+    </form>
+</div>
