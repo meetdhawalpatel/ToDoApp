@@ -13,8 +13,8 @@ export class TodolistComponent implements OnInit {
   public allTodos : Array<Todo>;
 
   constructor(private _todoService :TodoService) { 
-    this.allTodos = this._todoService.getAllTodo();
-    this.todo = {title:"",disc:"",done:false,isfav:false,lmtime:0};
+    this._todoService.getAllTodo().subscribe(data => this.allTodos = data);
+    this.todo = this._todoService.getEmptyTodo();
   }
 
   ngOnInit(): void {
@@ -23,8 +23,8 @@ export class TodolistComponent implements OnInit {
   save()
   {
     console.log(this.todo);
-    this.todo.lmtime = new Date().getTime();
+    this.todo.lmTime = new Date().getTime();
     this._todoService.addTodo(this.todo);
-    this.todo = {title:"",disc:"",done:false,isfav:false,lmtime:0};
+    this.todo =this._todoService.getEmptyTodo();
   }
 }

@@ -4,14 +4,14 @@
     
         <h5 class="card-title">{{todo.title}}</h5>
             
-      <p class="card-text">{{todo.disc}}</p>
+      <p class="card-text">{{todo.desc}}</p>
     </div>
     <div class="card-footer">
         <div class="float-left">
-            <app-favorite [isFav]="todo.isfav" (toggleFav)="changeFavStatus($event)"></app-favorite>
+            <app-favorite [isFav]="todo.isFavorite" (toggleFav)="changeFavStatus($event)"></app-favorite>
         </div>
         <div class="float-right">
-           <span>{{todo.lmtime | timeAgo:counter}}</span>
+           <span>{{todo.lmTime | timeAgo:counter}}</span>
         </div>
     </div>
   </div>

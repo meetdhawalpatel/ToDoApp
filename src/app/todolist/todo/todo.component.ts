@@ -24,7 +24,7 @@ export class TodoComponent implements OnInit {
 
   changeFavStatus(newStatus : boolean)
   {
-    this.todo.isfav = newStatus;
+    this.todo.isFavorite = newStatus;
     this._todoService.notifyUpdate();
   }
 
