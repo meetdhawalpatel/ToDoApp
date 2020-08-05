@@ -8,63 +8,37 @@ import { Observable } from 'rxjs';
 })
 export class TodoService {
   private url = "https://ngtodoapp.herokuapp.com/todo/";
-  private allTodos : Array<Todo>;
+  
   constructor(private _http : HttpClient) { 
-      let tempTodos = localStorage.getItem("todos");
-      if(tempTodos)
-      {
-        this.allTodos = JSON.parse(tempTodos);
-      }
-      else
-      {
-        this.allTodos = new Array<Todo>();
-      }
   }
 
   private _getAuthHeader()
   {
-   // let _headers = new HttpHeaders();
-   // _headers.append('Authorization','Bearer ');
-   // return {headers : _headers};
-
     return{
        headers : { 
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGhhd2FsIiwiZW1haWwiOiJkaGF3YWwucGF0ZWxAc2VjbG9yZS5jb20iLCJ1c2VySWQiOjcyNTIzMzkyMDU3MywiaWF0IjoxNTk2MjU5NDE2LCJleHAiOjE1OTYzNDU4MTZ9.EvBGWR82KV_rCfCYf-YlvuLWJb_f7FxVE-fwoKikUfw'}
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGhhd2FsIiwiZW1haWwiOiJkaGF3YWwucGF0ZWxAc2VjbG9yZS5jb20iLCJ1c2VySWQiOjcyNTIzMzkyMDU3MywiaWF0IjoxNTk2NjAyMzYyLCJleHAiOjE1OTY2ODg3NjJ9.FxiQqjnF2ln7NtzWHLucR0TUDGalPpVpPEmYwlIlZiA'}
     }
   }
 
-  addTodo(newTodo : Todo)
+  addTodo(newTodo : Todo): Observable<Todo>
   {
-    this._http.post(this.url,
-                JSON.stringify(newTodo), 
-                this._getAuthHeader()).subscribe(data => console.log(data));
-   // this.allTodos.push(newTodo);
-   // this._updateStorage();
+    console.log(JSON.stringify(newTodo));
+    return this._http.post<Todo>(this.url, newTodo, this._getAuthHeader());
   }
 
-  removeTodo(TodoTobeRemoved : Todo)
+  removeTodo(TodoTobeRemoved : Todo) : Observable<Todo>
   {
-    this._http.delete(this.url+'/'+TodoTobeRemoved.id,this._getAuthHeader()).subscribe(data => console.log(data));
-   // let index = this.allTodos.indexOf(TodoTobeRemoved);
-   // this.allTodos.splice(index,1);
-   // this._updateStorage();
+    return this._http.delete<Todo>(this.url+TodoTobeRemoved.id,this._getAuthHeader());
   }
 
   getAllTodo() : Observable<Todo[]>
   {
-    return this._http.get<Todo[]>(this.url,this._getAuthHeader());//.subscribe(data => console.log(data));
-    //return JSONData as unknown as Array<Todo>;
+    return this._http.get<Todo[]>(this.url,this._getAuthHeader());
   }
 
-  _updateStorage()
+  updateTodo(TodoTobeUpdated : Todo) : Observable<Todo>
   {
-    let jsonString = JSON.stringify(this.allTodos);
-    localStorage.setItem("todos",jsonString);
-  }
-
-  notifyUpdate()
-  {
-    this._updateStorage();
+    return this._http.put<Todo>(this.url+TodoTobeUpdated.id,TodoTobeUpdated,this._getAuthHeader());
   }
 
   getEmptyTodo() : Todo
