@@ -1,7 +1,7 @@
-import {  HttpClient, HttpHeaders } from '@angular/common/http';
-import { TodoComponent } from './todolist/todo/todo.component';
+import {  HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +16,17 @@ export class TodoService {
   {
     return{
        headers : { 
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGhhd2FsIiwiZW1haWwiOiJkaGF3YWwucGF0ZWxAc2VjbG9yZS5jb20iLCJ1c2VySWQiOjcyNTIzMzkyMDU3MywiaWF0IjoxNTk2NjAyMzYyLCJleHAiOjE1OTY2ODg3NjJ9.FxiQqjnF2ln7NtzWHLucR0TUDGalPpVpPEmYwlIlZiA'}
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGhhd2FsIiwiZW1haWwiOiJkaGF3YWwucGF0ZWxAc2VjbG9yZS5jb20iLCJ1c2VySWQiOjcyNTIzMzkyMDU3MywiaWF0IjoxNTk2NzcyNDk3LCJleHAiOjE1OTY4NTg4OTd9.OzYkXGJR94BLones92gDZHjmjilzHa6V3bs2WsRATZ81'}
     }
   }
 
   addTodo(newTodo : Todo): Observable<Todo>
   {
     console.log(JSON.stringify(newTodo));
-    return this._http.post<Todo>(this.url, newTodo, this._getAuthHeader());
+    return this._http.post<Todo>(this.url, newTodo, this._getAuthHeader()).pipe(
+      catchError(error => {console.log(error);
+                          throw throwError("MY Error")})
+    );
   }
 
   removeTodo(TodoTobeRemoved : Todo) : Observable<Todo>
@@ -33,7 +36,9 @@ export class TodoService {
 
   getAllTodo() : Observable<Todo[]>
   {
-    return this._http.get<Todo[]>(this.url,this._getAuthHeader());
+    return this._http.get<Todo[]>(this.url,this._getAuthHeader()).pipe(
+      catchError(error => {throw throwError("MY Error")})
+    );
   }
 
   updateTodo(TodoTobeUpdated : Todo) : Observable<Todo>

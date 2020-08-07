@@ -1,5 +1,6 @@
+import { AppErrorHandler } from './common/app.error.hanlder';
 import { BrowserModule} from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule,ReactiveFormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -27,7 +28,9 @@ import { HttpClientModule} from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {provide : ErrorHandler , useClass : AppErrorHandler}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
