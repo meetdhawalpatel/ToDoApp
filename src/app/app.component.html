@@ -1,6 +1,14 @@
 <div class="container">
-    <!--<app-login></app-login>-->
-    <!--<app-signup></app-signup>-->
-    <app-todolist></app-todolist>
- 
+      <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a routerLink="signup" routerLinkActive="active current" class="nav-item nav-link">Sign Up</a>
+            <a routerLink="login" routerLinkActive="active current" class="nav-item nav-link">Login</a>
+          </div>
+        </div>
+      </nav>
+      <router-outlet></router-outlet>
 </div>

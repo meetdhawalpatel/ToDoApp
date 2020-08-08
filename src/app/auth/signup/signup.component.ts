@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from './../../auth.service';
 import { ChangePasswordValidator } from './../../validator/change-password.validators';
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +15,8 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  constructor(private _authService : AuthService, fb: FormBuilder) {
+  constructor(private _authService : AuthService, fb: FormBuilder,
+      private _router: Router) {
     this.form = fb.group({
       name : ['',Validators.required],
       mobile : ['',Validators.required],
@@ -43,6 +45,9 @@ export class SignupComponent implements OnInit {
         this.form.setErrors({
             failed : status.error
         });
+      }
+      else{
+        this._router.navigate(['login'],{queryParams : {username:this.name.value}});
       }
     }
   }

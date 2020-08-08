@@ -8,13 +8,13 @@ export class AppErrorHandler implements ErrorHandler
         {
             error.subscribe(null,customeError => 
              {   
-                alert(customeError);
+                //alert(customeError);
                 console.log(customeError);
             });
         }
         else
         {
-            alert(error);
+            //alert(error);
             console.log(error);
         }error
        

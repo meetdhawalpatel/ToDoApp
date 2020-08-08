@@ -11,6 +11,7 @@ import { TimeAgoPipe } from './time-ago.pipe';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { HttpClientModule} from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HttpClientModule} from '@angular/common/http';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [
     {provide : ErrorHandler , useClass : AppErrorHandler}

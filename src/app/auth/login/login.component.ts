@@ -1,6 +1,7 @@
 import { AuthService, User } from './../../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +10,18 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private _authService : AuthService) { }
+  constructor(private _authService : AuthService,
+    private _activeRoute : ActivatedRoute,
+    private _router : Router) { }
 
   ngOnInit(): void {
+    this._activeRoute.queryParams.subscribe(params=>{
+      console.log(params);
+    });
+
   }
 
   onSubmit(form: NgForm){
-    console.log(form)
     if(form.invalid)
     {
       form.form.setErrors({error : "Please provide proper UserName and Password"});
@@ -27,7 +33,7 @@ export class LoginComponent implements OnInit {
     }
     else
     {
-      form.form.setErrors({success : 'user logged in '+ (result as User).name});
+      this._router.navigate(['todo/list']);
     }
 
   }
