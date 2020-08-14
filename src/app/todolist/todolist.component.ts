@@ -9,11 +9,11 @@ import { ThrowStmt } from '@angular/compiler';
 })
 export class TodolistComponent implements OnInit {
 
-  public todo : Todo;
+  public todo: Todo;
 
-  public allTodos : Array<Todo>;
+  public allTodos: Array<Todo>;
 
-  constructor(private _todoService :TodoService) { 
+  constructor(private _todoService: TodoService) {
     this._todoService.getAllTodo().subscribe(data => this.allTodos = data);
     this.todo = this._todoService.getEmptyTodo();
   }
@@ -26,26 +26,26 @@ export class TodolistComponent implements OnInit {
     console.log(this.todo);
     this.todo.lmTime = new Date().getTime();
     this._todoService.addTodo(this.todo).subscribe(data => this.allTodos.push(data));
-    this.todo =this._todoService.getEmptyTodo();
+    this.todo = this._todoService.getEmptyTodo();
   }
 
-  remove(id : number)
+  remove(id: number)
   {
     let todoTobeRemoved;
     this.allTodos.forEach(element => {
-       if(element.id === id) todoTobeRemoved = element;
+       if (element.id === id) { todoTobeRemoved = element; }
     });
 
-    this.allTodos.splice(this.allTodos.indexOf(todoTobeRemoved),1);
+    this.allTodos.splice(this.allTodos.indexOf(todoTobeRemoved), 1);
   }
 
-  update(todo : Todo)
+  update(todo: Todo)
   {
     let todoTobeUpdated;
     this.allTodos.forEach(element => {
-       if(element.id === todo.id) todoTobeUpdated = element;
+       if (element.id === todo.id) { todoTobeUpdated = element; }
     });
 
-    this.allTodos.splice(this.allTodos.indexOf(todoTobeUpdated),1,todo);
+    this.allTodos.splice(this.allTodos.indexOf(todoTobeUpdated), 1, todo);
   }
 }

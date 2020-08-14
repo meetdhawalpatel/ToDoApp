@@ -10,24 +10,24 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private _authService : AuthService,
-    private _activeRoute : ActivatedRoute,
-    private _router : Router) { }
+  constructor(private _authService: AuthService,
+              private _activeRoute: ActivatedRoute,
+              private _router: Router) { }
 
   ngOnInit(): void {
-    this._activeRoute.queryParams.subscribe(params=>{
+    this._activeRoute.queryParams.subscribe(params => {
       console.log(params);
     });
 
   }
 
   onSubmit(form: NgForm){
-    if(form.invalid)
+    if (form.invalid)
     {
-      form.form.setErrors({error : "Please provide proper UserName and Password"});
+      form.form.setErrors({error : 'Please provide proper UserName and Password'});
     }
-    let result = this._authService.login(form.value.name ,form.value.password);
-    if(result['error'])
+    const result = this._authService.login(form.value.name , form.value.password);
+    if (result['error'])
     {
       form.form.setErrors({error : result['error']});
     }

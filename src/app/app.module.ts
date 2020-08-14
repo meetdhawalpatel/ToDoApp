@@ -1,7 +1,8 @@
+import { RestInterceptor } from './interceptors/restinterceptor.interceptor';
 import { AppErrorHandler } from './common/app.error.hanlder';
 import { BrowserModule} from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
-import { FormsModule,ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { TodolistComponent } from './todolist/todolist.component';
@@ -10,7 +11,7 @@ import { FavoriteComponent } from './favorite/favorite.component';
 import { TimeAgoPipe } from './time-ago.pipe';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
@@ -31,7 +32,10 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule
   ],
   providers: [
-    {provide : ErrorHandler , useClass : AppErrorHandler}
+    {provide : ErrorHandler , useClass : AppErrorHandler},
+    { provide: HTTP_INTERCEPTORS,
+      useClass: RestInterceptor,
+      multi : true}
   ],
   bootstrap: [AppComponent]
 })

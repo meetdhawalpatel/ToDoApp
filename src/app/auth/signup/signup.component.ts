@@ -10,67 +10,67 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  form : FormGroup;
-  
+  form: FormGroup;
+
   ngOnInit(): void {
   }
 
-  constructor(private _authService : AuthService, fb: FormBuilder,
-      private _router: Router) {
+  constructor(private _authService: AuthService, fb: FormBuilder,
+              private _router: Router) {
     this.form = fb.group({
-      name : ['',Validators.required],
-      mobile : ['',Validators.required],
-      email : ['',Validators.email],
+      name : ['', Validators.required],
+      mobile : ['', Validators.required],
+      email : ['', Validators.email],
       passwordgroup : fb.group({
         password : ['', Validators.required],
         confirm_password : ['', Validators.required]
       },
       {
-        validators:ChangePasswordValidator.ShouldBeSame
+        validators: ChangePasswordValidator.ShouldBeSame
       })
     });
    }
 
   signup(){
-    if(this.form.valid)
+    if (this.form.valid)
     {
-      let status = this._authService.registor({
+      const status = this._authService.registor({
           name : this.name.value,
           email : this.email.value,
           mobile : this.mobile.value,
           password : this.password.value
       });
-      if(status && status.error)
+      if (status && status.error)
       {
         this.form.setErrors({
             failed : status.error
         });
       }
       else{
-        this._router.navigate(['login'],{queryParams : {username:this.name.value}});
+        this._router.navigate(['login'], {queryParams : {username: this.name.value}});
       }
     }
   }
 
   get name() {
     return this.form.get('name');
-  } 
+  }
   get mobile() {
     return this.form.get('mobile');
-  } 
+  }
   get email() {
     return this.form.get('email');
-  } 
+  }
   get password() {
     return this.form.get('passwordgroup.password');
-  } 
+  }
   get confirm_password() {
     return this.form.get('passwordgroup.confirm_password');
-  } 
+  }
 
   get passwordgroup() {
     return this.form.get('passwordgroup');
-  } 
+  }
 
 
 }

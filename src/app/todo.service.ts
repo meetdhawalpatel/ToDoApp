@@ -7,69 +7,62 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class TodoService {
-  private url = "https://ngtodoapp.herokuapp.com/todo/";
-  
-  constructor(private _http : HttpClient) { 
+  private url = 'https://ngtodoapp.herokuapp.com/todo/';
+
+  constructor(private _http: HttpClient) {
   }
 
-  private _getAuthHeader()
-  {
-    return{
-       headers : { 
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGhhd2FsIiwiZW1haWwiOiJkaGF3YWwucGF0ZWxAc2VjbG9yZS5jb20iLCJ1c2VySWQiOjcyNTIzMzkyMDU3MywiaWF0IjoxNTk2NzcyNDk3LCJleHAiOjE1OTY4NTg4OTd9.OzYkXGJR94BLones92gDZHjmjilzHa6V3bs2WsRATZ81'}
-    }
-  }
 
-  addTodo(newTodo : Todo): Observable<Todo>
+  addTodo(newTodo: Todo): Observable<Todo>
   {
     console.log(JSON.stringify(newTodo));
-    return this._http.post<Todo>(this.url, newTodo, this._getAuthHeader()).pipe(
+    return this._http.post<Todo>(this.url, newTodo).pipe(
       catchError(error => {console.log(error);
-                          throw throwError("MY Error")})
+                           throw throwError('MY Error'); })
     );
   }
 
-  removeTodo(TodoTobeRemoved : Todo) : Observable<Todo>
+  removeTodo(TodoTobeRemoved: Todo): Observable<Todo>
   {
-    return this._http.delete<Todo>(this.url+TodoTobeRemoved.id,this._getAuthHeader());
+    return this._http.delete<Todo>(this.url + TodoTobeRemoved.id);
   }
 
-  getAllTodo() : Observable<Todo[]>
+  getAllTodo(): Observable<Todo[]>
   {
-    return this._http.get<Todo[]>(this.url,this._getAuthHeader()).pipe(
-      catchError(error => {throw throwError("MY Error")})
+    return this._http.get<Todo[]>(this.url).pipe(
+      catchError(error => {throw throwError('MY Error'); })
     );
   }
 
-  updateTodo(TodoTobeUpdated : Todo) : Observable<Todo>
+  updateTodo(TodoTobeUpdated: Todo): Observable<Todo>
   {
-    return this._http.put<Todo>(this.url+TodoTobeUpdated.id,TodoTobeUpdated,this._getAuthHeader());
+    return this._http.put<Todo>(this.url + TodoTobeUpdated.id, TodoTobeUpdated);
   }
 
-  getEmptyTodo() : Todo
+  getEmptyTodo(): Todo
   {
     return {
       id : -1,
       title: '',
-      desc:'',
-      isFavorite:false,
-      createdBy:-1,
-      lmBy:-1,
-      creationTime:-1,
-      lmTime:-1,
-    }
+      desc: '',
+      isFavorite: false,
+      createdBy: -1,
+      lmBy: -1,
+      creationTime: -1,
+      lmTime: -1,
+    };
   }
 
 }
 
 export interface Todo
 {
-  id:number;
-  title:string;
-  desc:string;
-  isFavorite:boolean;
-  createdBy:number;
-  lmBy:number;
-  creationTime:number;
-  lmTime:number;
+  id: number;
+  title: string;
+  desc: string;
+  isFavorite: boolean;
+  createdBy: number;
+  lmBy: number;
+  creationTime: number;
+  lmTime: number;
 }

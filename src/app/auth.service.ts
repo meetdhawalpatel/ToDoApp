@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
 
-  allUsers : User[];
-  constructor() { 
-    let allUsersString = localStorage.getItem("users");
-    if(allUsersString)
+  allUsers: User[];
+  constructor() {
+    const allUsersString = localStorage.getItem('users');
+    if (allUsersString)
     {
       this.allUsers = JSON.parse(allUsersString);
     }
@@ -18,49 +18,62 @@ export class AuthService {
     }
   }
 
-  registor(user : User)
+  registor(user: User)
   {
-    let alreadyExist : boolean = false;
+    let alreadyExist = false;
     this.allUsers.forEach(element => {
-      if(element.name === user.name) 
+      if (element.name === user.name) {
         alreadyExist = true;
+      }
     });
 
-    if(alreadyExist)
+    if (alreadyExist)
     {
-      return {error : "User Already Exist"}
+      return {error : 'User Already Exist'};
     }
 
     this.allUsers.push(user);
     this._updateStorage();
   }
 
-  login(username :string, password : string) : User | {error: string}
+  login(username: string, password: string): User | {error: string}
   {
-    let user : User;
+    let user: User;
     this.allUsers.forEach(element => {
-      if(element.name === username && element.password === password) 
+      if (element.name === username && element.password === password) {
         user = element;
+      }
     });
-    if(user)
+    if (user)
     {
+      localStorage.setItem('auth',JSON.stringify(user));
       return user;
     }
     return {error : 'Invalid username or password'};
   }
 
+  isAuthneticated() : boolean
+  {
+    var user = localStorage.getItem("auth");
+    if(user)
+    {
+      return true;
+    }
+    return false;
+
+  }
   _updateStorage()
   {
-    let jsonString = JSON.stringify(this.allUsers);
-    localStorage.setItem("users",jsonString);
+    const jsonString = JSON.stringify(this.allUsers);
+    localStorage.setItem('users', jsonString);
   }
 
 }
 
 export interface User
 {
-  name : string,
-  mobile: string,
-  email: string,
-  password: string
+  name: string;
+  mobile: string;
+  email: string;
+  password: string;
 }
